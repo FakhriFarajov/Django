@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="/urls (snapshot).py">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="/urls (snapshot).py" />
+              <option name="originalContent" value="from django.contrib import admin&#10;from django.urls import path&#10;from . import views&#10;&#10;urlpatterns = [&#10;    path(&quot;&quot;, views.quotes, name=&quot;quotes&quot;),&#10;]" />
+              <option name="updatedContent" value="from django.contrib import admin&#10;from django.urls import path&#10;from . import views&#10;&#10;urlpatterns = [&#10;    path(&quot;&quot;, views.quotes, name=&quot;quotes&quot;),&#10;    path(&quot;quotes/&quot;, views.quotes, name=&quot;quotes_page&quot;),&#10;]" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="/views (snapshot).py">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="/views (snapshot).py" />
+              <option name="originalContent" value="from django.shortcuts import render&#10;from django.http import HttpResponse&#10;# Create your views here.&#10;def week_day(request):&#10;    return HttpResponse(&quot;&quot;)" />
+              <option name="updatedContent" value="from django.shortcuts import render&#10;from django.http import HttpResponse&#10;from datetime import datetime&#10;&#10;def week_day(request):&#10;    day = datetime.now().strftime(&quot;%A&quot;)&#10;    return HttpResponse(f&quot;Today is: {day}&quot;)" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
