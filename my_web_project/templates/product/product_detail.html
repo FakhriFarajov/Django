@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ product.name }}</h1>
+  <p>{{ product.description }}</p>
+  <p>Дата добавления: {{ product.created_at }}</p>
+
+  <h2>Отзывы</h2>
+  <ul>
+    {% for review in reviews %}
+      <li>
+        <strong>{{ review.user.username }}</strong> — Оценка: {{ review.rating }}<br>
+        {{ review.text }}<br>
+        <small>{{ review.created_at }}</small>
+        {% if review.user == request.user %}
+          <a href="{% url 'review_edit' review.id %}">Edit</a>
+          <a href="{% url 'review_delete' review.id %}">Delete</a>
+        {% endif %}
+      </li>
+    {% empty %}
+      <li>Пока нет отзывов.</li>
+    {% endfor %}
+  </ul>
+
+  {% if review_form %}
+    <h3>Оставить отзыв</h3>
+    <form method="post">
+      {% csrf_token %}
+      {{ review_form.as_p }}
+      <button type="submit">Оставить отзыв</button>
+    </form>
+  {% elif not request.user.is_authenticated %}
+    <p><a href="/accounts/login/">Войдите</a>, чтобы оставить отзыв.</p>
+  {% endif %}
+{% endblock %}

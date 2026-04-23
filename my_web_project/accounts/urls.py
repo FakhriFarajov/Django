@@ -1,0 +1,15 @@
+from django.urls import path
+from django.contrib.auth.views import LogoutView
+
+from accounts.views import register_view, register_success_view, login_view, dashboard_view
+
+app_name = "accounts"
+
+urlpatterns = [
+    path('register/', register_view, name='register'),
+    path('register/success/', register_success_view, name='register_success'),
+    path('login/', login_view, name='login'),
+
+    path('dashboard/', dashboard_view, name='dashboard'),
+    path('logout/', LogoutView.as_view(next_page='product_list'), name='logout'),
+]

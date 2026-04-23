@@ -10,8 +10,8 @@ class Product(models.Model):
         return self.name
 
 class Review(models.Model):
-    product = models.ForeignKey(Product, related_name='reviews', on_delete=models.CASCADE)
-    author = models.ForeignKey('auth.User', related_name='reviews', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='review_reviews', on_delete=models.CASCADE)
+    author = models.ForeignKey('auth.User', related_name='review_reviews', on_delete=models.CASCADE)
     rating = models.IntegerField()
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

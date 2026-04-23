@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>{% if edit %}Редактировать отзыв{% else %}Добавить отзыв{% endif %}</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">{% if edit %}Сохранить{% else %}Оставить отзыв{% endif %}</button>
+  </form>
+  <a href="{% url 'product_detail' product.id %}">Назад к продукту</a>
+{% endblock %}
+

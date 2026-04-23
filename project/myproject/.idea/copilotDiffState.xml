@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/products/models.py">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/products/models.py" />
+              <option name="originalContent" value="from django.db import models&#10;&#10;# Create your models here.&#10;class Product(models.Model):&#10;    name = models.CharField(max_length=100)&#10;    description = models.TextField()&#10;    created_at = models.DateTimeField(auto_now_add=True)&#10;&#10;    def __str__(self):&#10;        return self.name&#10;&#10;class Review(models.Model):&#10;    product = models.ForeignKey(Product, related_name='reviews', on_delete=models.CASCADE)&#10;    author = models.ForeignKey('auth.User', related_name='reviews', on_delete=models.CASCADE)&#10;    rating = models.IntegerField()&#10;    comment = models.TextField()&#10;    created_at = models.DateTimeField(auto_now_add=True)&#10;&#10;    def __str__(self):&#10;        return f'Review for {self.product.name} - Rating: {self.rating}'" />
+              <option name="updatedContent" value="from django.db import models&#10;&#10;# Create your models here.&#10;class Product(models.Model):&#10;    name = models.CharField(max_length=100)&#10;    description = models.TextField()&#10;    created_at = models.DateTimeField(auto_now_add=True)&#10;&#10;    def __str__(self):&#10;        return self.name&#10;&#10;class Review(models.Model):&#10;    product = models.ForeignKey(Product, related_name='product_reviews', on_delete=models.CASCADE)&#10;    author = models.ForeignKey('auth.User', related_name='product_reviews', on_delete=models.CASCADE)&#10;    rating = models.IntegerField()&#10;    comment = models.TextField()&#10;    created_at = models.DateTimeField(auto_now_add=True)&#10;&#10;    def __str__(self):&#10;        return f'Review for {self.product.name} - Rating: {self.rating}'" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/reviews/urls.py">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/reviews/urls.py" />
+              <option name="originalContent" value="from django.urls import path&#10;&#10;from accounts.views import register_view, register_success_view, login_view, dashboard_view&#10;&#10;app_name = &quot;reviews&quot;&#10;&#10;urlpatterns = [&#10;    path('register/', register_view, name='register'),&#10;    path('register/success/', register_success_view, name='register_success'),&#10;    path('login/', login_view, name='login'),&#10;    path('dashboard/', dashboard_view, name='dashboard'),&#10;]" />
+              <option name="updatedContent" value="from django.urls import path&#10;from . import views&#10;&#10;app_name = &quot;reviews&quot;&#10;&#10;urlpatterns = [&#10;    path('&lt;int:product_id&gt;/add/', views.review_create, name='add'),&#10;    path('&lt;int:review_id&gt;/edit/', views.review_update, name='edit'),&#10;    path('&lt;int:review_id&gt;/delete/', views.review_delete, name='delete'),&#10;]" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/templates/products/product_list.html">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/templates/products/product_list.html" />
+              <option name="updatedContent" value="{% extends &quot;base.html&quot; %}&#10;&#10;{% block title %}Product Hub - All Products{% endblock %}&#10;&#10;{% block content %}&#10;&lt;div class=&quot;row justify-content-center&quot;&gt;&#10;    &lt;div class=&quot;col-md-10 col-lg-8 col-xl-7&quot;&gt;&#10;        &lt;div class=&quot;card border-0 shadow-sm rounded-4 overflow-hidden&quot;&gt;&#10;            &lt;div class=&quot;card-body p-4 p-md-5&quot;&gt;&#10;                &lt;div class=&quot;text-center mb-4&quot;&gt;&#10;                    &lt;div class=&quot;d-inline-flex align-items-center justify-content-center rounded-circle bg-success bg-opacity-10 text-success fw-bold mb-3&quot;&#10;                         style=&quot;width: 3rem; height: 3rem;&quot;&gt;&#10;                        &#10;                    &lt;/div&gt;&#10;                    &lt;h1 class=&quot;h3 fw-bold mb-1&quot;&gt;All Products&lt;/h1&gt;&#10;                    &lt;p class=&quot;text-muted mb-0&quot;&gt;Browse our product catalog.&lt;/p&gt;&#10;                &lt;/div&gt;&#10;                {% if products %}&#10;                &lt;ul class=&quot;list-group mb-3&quot;&gt;&#10;                    {% for product in products %}&#10;                    &lt;li class=&quot;list-group-item d-flex justify-content-between align-items-center&quot;&gt;&#10;                        &lt;div&gt;&#10;                            &lt;strong&gt;{{ product.name }}&lt;/strong&gt;&#10;                            &lt;span class=&quot;text-muted ms-2&quot;&gt;{{ product.description|truncatewords:10 }}&lt;/span&gt;&#10;                        &lt;/div&gt;&#10;                        &lt;a href=&quot;{% url 'products:detail' product.id %}&quot; class=&quot;btn btn-sm btn-outline-primary&quot;&gt;View Details&lt;/a&gt;&#10;                    &lt;/li&gt;&#10;                    {% endfor %}&#10;                &lt;/ul&gt;&#10;                {% else %}&#10;                &lt;div class=&quot;alert alert-info text-center&quot; role=&quot;alert&quot;&gt;&#10;                    No products found.&#10;                &lt;/div&gt;&#10;                {% endif %}&#10;            &lt;/div&gt;&#10;        &lt;/div&gt;&#10;    &lt;/div&gt;&#10;&lt;/div&gt;&#10;{% endblock %}&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
