@@ -1,3 +1,5 @@
+# Set the login URL to the correct path (singular 'account')
+LOGIN_URL = '/account/login/'
 """
 Django settings for movie_watchlist_all_in_one_config project.
 
@@ -56,7 +58,7 @@ ROOT_URLCONF = 'movie_watchlist_all_in_one_config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'movie_watchlist_all_in_one_config' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

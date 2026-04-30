@@ -27,6 +27,7 @@ def register_success_view(request):
     })
 
 def login_view(request):
+    next_url = request.GET.get('next') or request.POST.get('next')
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -37,21 +38,15 @@ def login_view(request):
             )
             if user is not None:
                 login(request, user)
-                return redirect("products:home")
-            form.add_error(None,"Incorrect username or password")
+                if next_url:
+                    return redirect(next_url)
+                return redirect("watchlist:my_movies")
+            form.add_error(None, "Incorrect username or password")
     else:
         form = LoginForm()
-    return render(request, "account/login.html", {"form": form})
+    return render(request, "account/login.html", {"form": form, "next": next_url})
 
-@login_required
-def dashboard_view(request):
-    notes_total = request.user.notes.count()
-
-    return render(
-        request,
-        "account/dashboard.html",
-        {
-            "active_user": request.user.get_username(),
-            "notes_total": notes_total,
-        },
-    )
+def logout_view(request):
+    from django.contrib.auth import logout as auth_logout
+    auth_logout(request)
+    return redirect("account:login")

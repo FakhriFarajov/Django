@@ -16,19 +16,31 @@
         <!-- Form -->
         <form method="post">
             {% csrf_token %}
-            <div class="mb-4">
-                <label class="form-label small text-uppercase fw-bold text-white" style="font-size: 0.7rem;">Email Address</label>
-                <input type="email" class="form-control bg-dark text-white" style="border: 1.5px solid #fff;" placeholder="developer@devstream.io">
-            </div>
-
-            <div class="mb-4">
-                <div class="d-flex justify-content-between">
-                    <label class="form-label small text-uppercase fw-bold text-white" style="font-size: 0.7rem;">Password</label>
-                    <a href="#" class="small text-white" style="font-size: 0.75rem;">Forgot password?</a>
+            {% if next %}
+                <input type="hidden" name="next" value="{{ next }}">
+            {% endif %}
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>{{ error|escape }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error|escape }}</li>
+                    {% endfor %}
+                    </ul>
                 </div>
-                <input type="password" class="form-control bg-dark text-white" style="border: 1.5px solid #fff;" placeholder="••••••••">
+            {% endif %}
+            <div class="mb-4">
+                {{ form.username_or_email.label_tag }}
+                {{ form.username_or_email }}
             </div>
-
+            <div class="mb-4">
+                {{ form.password.label_tag }}
+                {{ form.password }}
+            </div>
             <button type="submit" class="btn w-100" style="background-color: var(--brand-cyan); color: #fff;">Log In</button>
 
         </form>

@@ -13,19 +13,36 @@
                     <form method="post">
                         {% csrf_token %}
 
-                        <div class="mb-4">
-                            <label class="form-label text-white">Full Name</label>
-                            <input type="text" class="form-control bg-dark text-white" style="border: 1.5px solid #fff;" placeholder="Linus Torvalds">
-                        </div>
+                        {% if form.errors %}
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                {% for field in form %}
+                                    {% for error in field.errors %}
+                                        <li>{{ error|escape }}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                                {% for error in form.non_field_errors %}
+                                    <li>{{ error|escape }}</li>
+                                {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
 
                         <div class="mb-4">
-                            <label class="form-label text-white">Email Address</label>
-                            <input type="email" class="form-control bg-dark text-white" style="border: 1.5px solid #fff;" placeholder="you@example.com">
+                            {{ form.username.label_tag }}
+                            {{ form.username }}
                         </div>
-
                         <div class="mb-4">
-                            <label class="form-label text-white">Password</label>
-                            <input type="password" class="form-control bg-dark text-white" style="border: 1.5px solid #fff;" placeholder="••••••••">
+                            {{ form.email.label_tag }}
+                            {{ form.email }}
+                        </div>
+                        <div class="mb-4">
+                            {{ form.password.label_tag }}
+                            {{ form.password }}
+                        </div>
+                        <div class="mb-4">
+                            {{ form.confirm_password.label_tag }}
+                            {{ form.confirm_password }}
                         </div>
                         <button type="submit" class="btn w-100" style="background-color: var(--brand-cyan); color: #fff; border: 1.5px solid #fff;">Create Account</button>
                     </form>

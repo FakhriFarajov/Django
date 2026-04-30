@@ -17,9 +17,11 @@ Including another URLconf
 from django.urls import path, include
 from watchlist import views
 
-appname = "watchlist"
+app_name = "watchlist"
 
 urlpatterns = [
     path('my_movies/', views.my_movies, name='my_movies'),
     path('create_movie/', views.create_movie, name='create_movie'),
+    path('edit_movie/<int:movie_id>/', views.edit_movie, name='edit_movie'),
+    path('delete_movie/<int:movie_id>/', views.delete_movie, name='delete_movie'),
 ]

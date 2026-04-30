@@ -142,6 +142,35 @@
 </head>
 <body>
 
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'watchlist:my_movies' %}">My Movies</a>
+                        </li>
+                        <li class="nav-item">
+                            <form method="post" action="{% url 'account:logout' %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-link nav-link" style="display:inline; padding:0; color:inherit;">Logout</button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'account:login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'account:register' %}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End Navbar -->
+
     <div class="container py-5">
         {% block content %}{% endblock %}
     </div>
