@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex flex-column align-items-center">
+    <!-- Header Section -->
+    <div class="text-center mb-5">
+        <h1 class="serif-font brand-logo mb-0">DevStream</h1>
+        <div class="brand-subtitle">Intellectual Rigor</div>
+    </div>
+
+    <div class="card shadow-sm p-4 mb-5 bg-body rounded" style="min-width: 320px; max-width: 400px;">
+        <h5 class="mb-4 text-center">Управление фильмами</h5>
+        <div class="d-flex flex-column gap-3">
+            <button onclick="window.location.href='{% url 'my_movies' %}'" class="btn btn-primary d-flex align-items-center justify-content-center">
+                <i class="bi bi-list-ul me-2"></i> Список фильмов
+            </button>
+            <button onclick="window.location.href='{% url 'add_movie' %}'" class="btn btn-success d-flex align-items-center justify-content-center">
+                <i class="bi bi-plus-circle me-2"></i> Добавить фильм
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}

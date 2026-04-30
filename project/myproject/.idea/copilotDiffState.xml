@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/products/models.py">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/products/models.py" />
+              <option name="originalContent" value="from django.db import models&#10;&#10;# Create your models here.&#10;class Product(models.Model):&#10;    name = models.CharField(max_length=100)&#10;    description = models.TextField()&#10;    created_at = models.DateTimeField(auto_now_add=True)&#10;&#10;    def __str__(self):&#10;        return self.name&#10;&#10;class Review(models.Model):&#10;    product = models.ForeignKey(Product, related_name='reviews', on_delete=models.CASCADE)&#10;    author = models.ForeignKey('auth.User', related_name='reviews', on_delete=models.CASCADE)&#10;    rating = models.IntegerField()&#10;    comment = models.TextField()&#10;    created_at = models.DateTimeField(auto_now_add=True)&#10;&#10;    def __str__(self):&#10;        return f'Review for {self.product.name} - Rating: {self.rating}'" />
+              <option name="updatedContent" value="from django.db import models&#10;&#10;# Create your models here.&#10;class Product(models.Model):&#10;    name = models.CharField(max_length=100)&#10;    description = models.TextField()&#10;    created_at = models.DateTimeField(auto_now_add=True)&#10;&#10;    def __str__(self):&#10;        return self.name&#10;&#10;class Review(models.Model):&#10;    product = models.ForeignKey(Product, related_name='product_reviews', on_delete=models.CASCADE)&#10;    author = models.ForeignKey('auth.User', related_name='product_reviews', on_delete=models.CASCADE)&#10;    rating = models.IntegerField()&#10;    comment = models.TextField()&#10;    created_at = models.DateTimeField(auto_now_add=True)&#10;&#10;    def __str__(self):&#10;        return f'Review for {self.product.name} - Rating: {self.rating}'" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/reviews/urls.py">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/reviews/urls.py" />
+              <option name="originalContent" value="from django.urls import path&#10;&#10;from accounts.views import register_view, register_success_view, login_view, dashboard_view&#10;&#10;app_name = &quot;reviews&quot;&#10;&#10;urlpatterns = [&#10;    path('register/', register_view, name='register'),&#10;    path('register/success/', register_success_view, name='register_success'),&#10;    path('login/', login_view, name='login'),&#10;    path('dashboard/', dashboard_view, name='dashboard'),&#10;]" />
+              <option name="updatedContent" value="from django.urls import path&#10;from . import views&#10;&#10;app_name = &quot;reviews&quot;&#10;&#10;urlpatterns = [&#10;    path('&lt;int:product_id&gt;/add/', views.review_create, name='add'),&#10;    path('&lt;int:review_id&gt;/edit/', views.review_update, name='edit'),&#10;    path('&lt;int:review_id&gt;/delete/', views.review_delete, name='delete'),&#10;]" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
