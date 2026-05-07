@@ -3,6 +3,32 @@
 <div class="container mt-5">
     <h2 class="mb-4">Мои фильмы</h2>
     <a href="{% url 'watchlist:create_movie' %}" class="btn btn-success mb-3">Добавить фильм</a>
+
+    <form method="get" class="row g-2 mb-3">
+        <div class="col-md-4">
+            <label for="status" class="form-label">Статус</label>
+            <select id="status" name="status" class="form-select">
+                <option value="">Все</option>
+                {% for value, label in status_choices %}
+                    <option value="{{ value }}" {% if selected_status == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="genre" class="form-label">Жанр</label>
+            <select id="genre" name="genre" class="form-select">
+                <option value="">Все</option>
+                {% for genre in genres %}
+                    <option value="{{ genre }}" {% if selected_genre == genre %}selected{% endif %}>{{ genre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4 d-flex align-items-end gap-2">
+            <button type="submit" class="btn btn-primary">Применить</button>
+            <a href="{% url 'watchlist:my_movies' %}" class="btn btn-outline-secondary">Сбросить</a>
+        </div>
+    </form>
+
     <table class="table table-striped">
         <thead>
             <tr>

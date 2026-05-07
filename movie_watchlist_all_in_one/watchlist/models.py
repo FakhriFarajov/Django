@@ -20,7 +20,7 @@ class Movie(models.Model):
         default='to_watch'
     )
     author = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
-    rating = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(5)])
+    rating = models.FloatField(validators=[MinValueValidator(1), MaxValueValidator(10)])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -3,53 +3,67 @@ from django.shortcuts import render, redirect, get_object_or_404
 from . import models, forms
 
 
-# Create your views here.
 @login_required
 def my_movies(request):
     movies = models.Movie.objects.filter(author=request.user)
-    return render(request, "main/my_movies.html", {'movies': movies})
+
+    selected_status = request.GET.get("status", "").strip()
+    selected_genre = request.GET.get("genre", "").strip()
+
+    valid_statuses = {choice[0] for choice in models.STATUS_CHOICES}
+    if selected_status in valid_statuses:
+        movies = movies.filter(status=selected_status)
+
+    if selected_genre:
+        movies = movies.filter(genre__iexact=selected_genre)
+
+    genres = (
+        models.Movie.objects
+        .filter(author=request.user)
+        .order_by("genre")
+        .values_list("genre", flat=True)
+        .distinct()
+    )
+
+    return render(
+        request,
+        "main/my_movies.html",
+        {
+            "movies": movies,
+            "status_choices": models.STATUS_CHOICES,
+            "genres": genres,
+            "selected_status": selected_status,
+            "selected_genre": selected_genre,
+        },
+    )
+
 
 @login_required
 def create_movie(request):
     if request.method == "POST":
         form = forms.CreateMovieForm(request.POST)
         if form.is_valid():
-            movie = models.Movie(
-                title=form.cleaned_data['title'],
-                genre=form.cleaned_data['genre'],
-                year=form.cleaned_data['release_year'],
-                status=form.cleaned_data['status'],
-                rating=form.cleaned_data['rating'],
-                author=request.user
-            )
+            movie = form.save(commit=False)
+            movie.author = request.user
             movie.save()
             return redirect('watchlist:my_movies')
     else:
         form = forms.CreateMovieForm()
     return render(request, "main/add_movie.html", {'form': form})
 
+
 @login_required
 def edit_movie(request, movie_id):
     movie = get_object_or_404(models.Movie, id=movie_id, author=request.user)
     if request.method == "POST":
-        form = forms.UpdateMovieForm(request.POST)
+        form = forms.UpdateMovieForm(request.POST, instance=movie)
         if form.is_valid():
-            movie.title = form.cleaned_data['title']
-            movie.genre = form.cleaned_data['genre']
-            movie.year = form.cleaned_data['release_year']
-            movie.status = form.cleaned_data['status']
-            movie.rating = form.cleaned_data['rating']
-            movie.save()
+            form.save()
             return redirect('watchlist:my_movies')
     else:
-        form = forms.UpdateMovieForm(initial={
-            'title': movie.title,
-            'genre': movie.genre,
-            'release_year': movie.year,
-            'status': movie.status,
-            'rating': movie.rating,
-        })
+        form = forms.UpdateMovieForm(instance=movie)
     return render(request, "main/edit_movie.html", {'form': form, 'movie': movie})
+
 
 @login_required
 def delete_movie(request, movie_id):
